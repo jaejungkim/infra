@@ -3,7 +3,7 @@ echo ""
 #!/bin/bash
 
 # 현재 접속한 터미널의 IP 주소 확인
-current_ip=$(who am i | awk '{print $5}' | tr -d '()')
+current_ip=$(ip -4 --oneline a s scope global | awk '{print $4}' | awk -F'/' '{print $1}' | head -1)
 
 # GitHub에서 server.txt 파일의 내용을 가져옴
 Server=$(curl -sf https://raw.githubusercontent.com/jaejungkim/infra/main/server.txt)
