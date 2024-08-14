@@ -4,5 +4,5 @@ IP                |        Hostname          |        OS             |          
 192.168.0.7                main                     CentOS 8.5.2111 
 192.168.0.202              rhel_8_6                 RHEL 8.6     
 192.168.0.203              container                CentOS 7.9                   docker, tomcat , nginx
-192.168.0.242              master                   Rocky 8.10                   tt test
+192.168.0.242              master                   Rocky 8.10                   tt test, kubernetes
 192.168.0.246              tt                       CentOS 7.9                   tt compile
