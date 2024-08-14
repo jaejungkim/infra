@@ -23,5 +23,27 @@ if [ $? -eq 0 ]; then
 else
   echo "failed fetch"
 fi
-
 echo ""
+
+###인증서 만료일 알림
+# 인증서 만료일을 가져와서 Unix 타임스탬프로 변환
+cert_expiry=$(curl -v https://tt.inclunet.com 2>&1 | grep -i "expire date" | awk '{print substr($0, index($0,$4))}' | xargs -I {} date -d "{}" +"%s")
+
+# 현재 날짜의 Unix 타임스탬프
+current_date=$(date +"%s")
+
+# 7일(7 * 24 * 60 * 60초)을 Unix 타임스탬프로 계산
+seven_days=$((7 * 24 * 60 * 60))
+
+# 만료일까지 남은 시간 계산 (초 단위)
+time_until_expiry=$((cert_expiry - current_date))
+
+# 남은 시간을 일 단위로 변환
+days_until_expiry=$((time_until_expiry / 86400))
+
+# 만료일이 7일 이내인지 확인
+if [ "$time_until_expiry" -le "$seven_days" ]; then
+  echo "ALERT: *.inclunet.com TLS인증서가 $days_until_expiry일 이내에 만료됩니다. 인증서를 갱신하세요!"
+else
+  echo "*.inclunet.com TLS인증서 유효기한 $days_until_expiry일 남아 있습니다."
+fi
