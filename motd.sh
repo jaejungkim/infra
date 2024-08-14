@@ -47,3 +47,4 @@ if [ "$time_until_expiry" -le "$seven_days" ]; then
 else
   echo "*.inclunet.com TLS인증서 유효기한 $days_until_expiry일 남아 있습니다."
 fi
+echo ""
