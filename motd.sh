@@ -27,7 +27,7 @@ echo ""
 
 ###인증서 만료일 알림
 # 인증서 만료일을 가져와서 Unix 타임스탬프로 변환
-cert_expiry=$(curl -v https://tt.inclunet.com 2>&1 | grep -i "expire date" | awk '{print substr($0, index($0,$4))}' | xargs -I {} date -d "{}" +"%s")
+cert_expiry=$(curl -v --connect-timeout 7 --max-time 7 https://tt.inclunet.com 2>&1 | grep -i "expire date" | awk '{print substr($0, index($0,$4))}' | xargs -I {} date -d "{}" +"%s")
 
 # 현재 날짜의 Unix 타임스탬프
 current_date=$(date +"%s")
